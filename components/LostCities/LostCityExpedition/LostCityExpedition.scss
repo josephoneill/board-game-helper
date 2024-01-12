@@ -19,10 +19,6 @@
   background: var(--card-background);
   background-size: cover;
   color: var(--card-text-color);
-
-  &:hover {
-    outline: 2px solid white;
-  }
 }
 
 .card-button--selected {
@@ -61,9 +57,11 @@
     max-height: 5.75rem;
     width: initial;
     height: initial;
+  }
+}
 
-    &:hover {
-      outline: none;
-    }
+@media (hover: hover) {
+  .card-button:hover {
+    outline: 2px solid white;
   }
 }
