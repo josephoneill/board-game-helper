@@ -5,16 +5,6 @@
   gap: 1rem;
 }
 
-@media only screen and (max-width: 768px) {
-  .card__container {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    /* display: grid;
-    grid-template-columns: repeat(6, 1fr); */
-  }
-}
-
 .card-button {
   width: 4rem;
   height: 5.75rem;
@@ -22,18 +12,21 @@
   position: relative;
   border: none;
   border-right: 2px solid black;
+  aspect-ratio: 4/5.75;
+  /* flex-grow: 1;
+  flex-basis: 50%; */
 
   background: var(--card-background);
   background-size: cover;
   color: var(--card-text-color);
 
   &:hover {
-    outline: 2px solid black;
+    outline: 2px solid white;
   }
 }
 
 .card-button--selected {
-  outline: 2px solid black;
+  outline: 2px solid white;
 }
 
 .card-button__text {
@@ -49,4 +42,28 @@
 .card-button__text--bottom {
   bottom: 0.35rem;
   left: 0.25rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .lost-city-expedition {
+    width: 100%;
+  }
+
+  .card__container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(2.5rem, 1fr));
+  }
+
+  .card-button {
+    min-width: 2.5rem;
+    min-height: 4rem;
+    max-width: 4rem;
+    max-height: 5.75rem;
+    width: initial;
+    height: initial;
+
+    &:hover {
+      outline: none;
+    }
+  }
 }

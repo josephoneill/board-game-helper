@@ -4,9 +4,9 @@
       <button
         v-for="i in 3"
         :key="`wager-card-button-${i}`"
-        :class="getCardButtonClasses(i, true, i)"
-        :style="getCardButtonStyle(i, true, i)"
-        @click="onCardButtonClicked(i, true, i)"
+        :class="cardButtonClasses.get(`wager-${i}`)"
+        :style="getCardButtonStyle(i - 1, true)"
+        @click="onCardButtonClicked(i - 1, true)"
       >
         <span class="card-button__text card-button__text--top">W</span>
         <span class="card-button__text card-button__text--bottom">W</span>
@@ -15,9 +15,9 @@
       <button
         v-for="i in 9"
         :key="`face-card-button-${i}`"
-        :class="getCardButtonClasses(i)"
-        :style="getCardButtonStyle(i)"
-        @click="onCardButtonClicked(i)"
+        :class="cardButtonClasses.get(i + 1)"
+        :style="getCardButtonStyle(i + 1)"
+        @click="onCardButtonClicked(i + 1)"
       >
         <span class="card-button__text card-button__text--top face-card-button__text">{{ i + 1 }}</span>
         <span class="card-button__text card-button__text--bottom face-card-button__text">{{ i + 1 }}</span>
@@ -78,7 +78,8 @@ const score = ref(0);
 const expeditionCards = ref<CardOptions>(new CardOptions());
 
 function numberToWord(num: number) {
-  return numberToWords[num - 1];
+  // -2, one for indexing starting a zero, one for cards starting at 2
+  return numberToWords[num - 2];
 }
 
 function getCardButtonStyle(cardNum: number, wager: boolean = false, wagerIndex: number = 0) {
@@ -93,10 +94,10 @@ function getCardButtonStyle(cardNum: number, wager: boolean = false, wagerIndex:
   };
 }
 
-function getCardButtonClasses(cardNum: number, wager: boolean = false, wagerIndex: number = 0) {
+function getCardButtonClasses(cardNum: number, wager: boolean = false) {
   const cardKey = numberToWord(cardNum);
   const cardColor = ExpeditionType[props.expeditionType].toLowerCase();
-  const cardSelected = !wager ? expeditionCards.value[cardKey] : expeditionCards.value.wager[wagerIndex];
+  const cardSelected = !wager ? expeditionCards.value[cardKey] : expeditionCards.value.wager[cardNum];
 
   return {
     'card-button': true,
@@ -106,15 +107,41 @@ function getCardButtonClasses(cardNum: number, wager: boolean = false, wagerInde
   };
 }
 
-function onCardButtonClicked(cardNum: number, wager = false, index: number = 0) {
+const cardButtonClasses = computed(() => {
+  const classes = new Map();
+  for (let i = 2; i <= 10; i++) {
+    const cardKey = numberToWord(i);
+    const cardSelected = expeditionCards.value[cardKey];
+
+    classes.set(i, {
+      'card-button': true,
+      'face-card-button': true,
+      'card-button--selected': cardSelected,
+    });
+  }
+
+  for (let i = 1; i <= 3; i++) {
+    const cardSelected = expeditionCards.value.wager[i - 1];
+
+    classes.set(`wager-${i}`, {
+      'card-button': true,
+      'wager-card-button': true,
+      'card-button--selected': cardSelected
+    });
+  }
+
+  return classes;
+});
+
+function onCardButtonClicked(cardNum: number, wager = false) {
   const cardKey = numberToWord(cardNum);
-  const cardValRef = !wager ? expeditionCards.value[cardKey] : expeditionCards.value.wager[index];
+  const cardValRef = !wager ? expeditionCards.value[cardKey] : expeditionCards.value.wager[cardNum];
   const cardIsInExpedition = cardValRef;
 
   if (!wager) {
     expeditionCards.value[cardKey] = !cardValRef;
   } else {
-    expeditionCards.value.wager[index] = !cardValRef;
+    expeditionCards.value.wager[cardNum] = !cardValRef;
   }
 
   const card = !wager ? ExpeditionCard[cardKey.toUpperCase()] : ExpeditionCard.WAGER;

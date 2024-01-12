@@ -1,3 +1,1 @@
-import LostCityExpedition from "./LostCityExpedition.vue";
-
-export default LostCityExpedition;
+export { default } from './LostCityExpedition.vue';
