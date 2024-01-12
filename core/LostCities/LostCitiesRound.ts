@@ -1,20 +1,31 @@
-import { LostCityExpedition, ExpeditionCard } from "./LostCitiesExpedition";
+import { LostCitiesExpedition, ExpeditionCard } from "./LostCitiesExpedition";
 
-class LostCityRound {
-  private yellowExpedition: LostCityExpedition;
-  private whiteExpedition: LostCityExpedition;
-  private blueExpedition: LostCityExpedition;
-  private greenExpedition: LostCityExpedition;
-  private redExpedition: LostCityExpedition;
-  private purpleExpedition: LostCityExpedition;
+class LostCitiesScoreBreakdown {
+  yellow: Number = 0;
+  white: Number = 0;
+  blue: Number = 0;
+  green: Number = 0;
+  red: Number = 0;
+  purple: Number = 0;
+
+  constructor() {}
+}
+
+class LostCitiesRound {
+  private yellowExpedition: LostCitiesExpedition;
+  private whiteExpedition: LostCitiesExpedition;
+  private blueExpedition: LostCitiesExpedition;
+  private greenExpedition: LostCitiesExpedition;
+  private redExpedition: LostCitiesExpedition;
+  private purpleExpedition: LostCitiesExpedition;
 
   constructor() {
-    this.yellowExpedition = new LostCityExpedition();
-    this.whiteExpedition = new LostCityExpedition();
-    this.blueExpedition = new LostCityExpedition();
-    this.greenExpedition = new LostCityExpedition();
-    this.redExpedition = new LostCityExpedition();
-    this.purpleExpedition = new LostCityExpedition();
+    this.yellowExpedition = new LostCitiesExpedition();
+    this.whiteExpedition = new LostCitiesExpedition();
+    this.blueExpedition = new LostCitiesExpedition();
+    this.greenExpedition = new LostCitiesExpedition();
+    this.redExpedition = new LostCitiesExpedition();
+    this.purpleExpedition = new LostCitiesExpedition();
   }
 
   /**
@@ -22,11 +33,11 @@ class LostCityRound {
    * @param expedition The expedition to add a card to
    * @param card The card to add to an expedition
    */
-  private addCard(expedition: LostCityExpedition, card: ExpeditionCard) {
+  private addCard(expedition: LostCitiesExpedition, card: ExpeditionCard) {
     expedition.addCardEntry(card);
   }
 
-  private removeCard(expedition: LostCityExpedition, card: ExpeditionCard) {
+  private removeCard(expedition: LostCitiesExpedition, card: ExpeditionCard) {
     expedition.removeCardEntry(card);
   }
 
@@ -126,7 +137,7 @@ class LostCityRound {
     this.removeCard(this.purpleExpedition, card);
   }
 
-  private getScoreBreakdown() {
+  public getScoreBreakdown(): LostCitiesScoreBreakdown {
     const yellowScore = this.yellowExpedition.getScore();
     const whiteScore = this.whiteExpedition.getScore();
     const blueScore = this.blueExpedition.getScore();
@@ -148,11 +159,12 @@ class LostCityRound {
    * Determines the total score for a given round
    * @returns the total score of the round
    */
-  public getScore(): number {
-    const scoreBreakdown = this.getScoreBreakdown();
+  public getScore(breakdown: LostCitiesScoreBreakdown | null = null): Number {
+    const scoreBreakdown = breakdown ?? this.getScoreBreakdown();
     const score = Object.values(scoreBreakdown).reduce((acc, x) => acc + x, 0);
     return score;
   }
 }
 
-export default LostCityRound;
+export default LostCitiesRound;
+export { LostCitiesScoreBreakdown };

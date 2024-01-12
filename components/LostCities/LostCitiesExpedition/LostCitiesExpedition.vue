@@ -23,11 +23,15 @@
         <span class="card-button__text card-button__text--bottom face-card-button__text">{{ i + 1 }}</span>
       </button>
     </div>
+
+    <hr />
+
+    Score: {{ score }}
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { ExpeditionCard, ExpeditionType } from '~/core/LostCities/LostCitiesExpedition';
 import type { AddCardEvent, RemoveCardEvent } from '~/core/LostCities/LostCitiesEvents';
 
@@ -40,6 +44,11 @@ const props = defineProps({
   expeditionType: {
     type: Number,
     default: ExpeditionType.YELLOW,
+    required: true,
+  },
+  score: {
+    type: Number,
+    default: 0,
     required: true,
   },
   color: {
@@ -72,8 +81,6 @@ class CardOptions {
 
   constructor() {}
 }
-
-const score = ref(0);
 
 const expeditionCards = ref<CardOptions>(new CardOptions());
 
@@ -160,4 +167,4 @@ function onCardButtonClicked(cardNum: number, wager = false) {
 }
 </script>
 
-<style src="./LostCityExpedition.scss" lang="scss" />
+<style src="./LostCitiesExpedition.scss" lang="scss" />

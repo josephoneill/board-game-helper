@@ -1,12 +1,12 @@
 import { ExpeditionCard, ExpeditionType } from './LostCitiesExpedition';
 import type { AddCardEvent, RemoveCardEvent } from './LostCitiesEvents';
-import LostCityRound from './LostCitiesRound';
+import LostCitiesRound, { LostCitiesScoreBreakdown } from './LostCitiesRound';
 
 class LostCitiesGameManager {
-  private lostCityRound: LostCityRound;
+  private lostCitiesRound: LostCitiesRound;
 
   constructor() {
-    this.lostCityRound = new LostCityRound();
+    this.lostCitiesRound = new LostCitiesRound();
   }
 
   /**
@@ -17,27 +17,27 @@ class LostCitiesGameManager {
     const { card, expeditionType } = event;
     switch (expeditionType) {
       case ExpeditionType.YELLOW: {
-        this.lostCityRound.addYellowExpeditionCard(card);
+        this.lostCitiesRound.addYellowExpeditionCard(card);
         break;
       }
       case ExpeditionType.WHITE: {
-        this.lostCityRound.addWhiteExpeditionCard(card);
+        this.lostCitiesRound.addWhiteExpeditionCard(card);
         break;
       }
       case ExpeditionType.BLUE: {
-        this.lostCityRound.addBlueExpeditionCard(card);
+        this.lostCitiesRound.addBlueExpeditionCard(card);
         break;
       }
       case ExpeditionType.GREEN: {
-        this.lostCityRound.addGreenExpeditionCard(card);
+        this.lostCitiesRound.addGreenExpeditionCard(card);
         break;
       }
       case ExpeditionType.RED: {
-        this.lostCityRound.addRedExpeditionCard(card);
+        this.lostCitiesRound.addRedExpeditionCard(card);
         break;
       }
       case ExpeditionType.PURPLE: {
-        this.lostCityRound.addPurpleExpeditionCard(card);
+        this.lostCitiesRound.addPurpleExpeditionCard(card);
         break;
       }
     }
@@ -47,38 +47,42 @@ class LostCitiesGameManager {
    * Removes a card from the appropriate expedition
    * @param event the add card event
    */
-    public removeCard(event: RemoveCardEvent) {
-      const { card, expeditionType } = event;
-      switch (expeditionType) {
-        case ExpeditionType.YELLOW: {
-          this.lostCityRound.removeYellowExpeditionCard(card);
-          break;
-        }
-        case ExpeditionType.WHITE: {
-          this.lostCityRound.removeWhiteExpeditionCard(card);
-          break;
-        }
-        case ExpeditionType.BLUE: {
-          this.lostCityRound.removeBlueExpeditionCard(card);
-          break;
-        }
-        case ExpeditionType.GREEN: {
-          this.lostCityRound.removeGreenExpeditionCard(card);
-          break;
-        }
-        case ExpeditionType.RED: {
-          this.lostCityRound.removeRedExpeditionCard(card);
-          break;
-        }
-        case ExpeditionType.PURPLE: {
-          this.lostCityRound.removePurpleExpeditionCard(card);
-          break;
-        }
+  public removeCard(event: RemoveCardEvent) {
+    const { card, expeditionType } = event;
+    switch (expeditionType) {
+      case ExpeditionType.YELLOW: {
+        this.lostCitiesRound.removeYellowExpeditionCard(card);
+        break;
+      }
+      case ExpeditionType.WHITE: {
+        this.lostCitiesRound.removeWhiteExpeditionCard(card);
+        break;
+      }
+      case ExpeditionType.BLUE: {
+        this.lostCitiesRound.removeBlueExpeditionCard(card);
+        break;
+      }
+      case ExpeditionType.GREEN: {
+        this.lostCitiesRound.removeGreenExpeditionCard(card);
+        break;
+      }
+      case ExpeditionType.RED: {
+        this.lostCitiesRound.removeRedExpeditionCard(card);
+        break;
+      }
+      case ExpeditionType.PURPLE: {
+        this.lostCitiesRound.removePurpleExpeditionCard(card);
+        break;
       }
     }
+  }
 
-  public getScore() {
-    const score = this.lostCityRound.getScore();
+  public getScoreBreakdown() {
+    return this.lostCitiesRound.getScoreBreakdown();
+  }
+
+  public getScore(breakdown: LostCitiesScoreBreakdown) {
+    const score = this.lostCitiesRound.getScore(breakdown);
 
     return score;
   }

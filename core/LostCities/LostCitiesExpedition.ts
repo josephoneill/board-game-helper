@@ -23,7 +23,7 @@ enum ExpeditionType {
 const largeExpeditionBonus = 20;
 const expeditionCost = -20;
 
-class LostCityExpedition {
+class LostCitiesExpedition {
   private cardEntries: ExpeditionCard[];
 
   constructor(cardEntries = []) {
@@ -99,9 +99,9 @@ class LostCityExpedition {
   }
 }
 
-export default LostCityExpedition;
+export default LostCitiesExpedition;
 export { 
-  LostCityExpedition,
+  LostCitiesExpedition,
   ExpeditionCard,
   ExpeditionType
 };
