@@ -9,6 +9,9 @@ export default defineNuxtConfig({
 		'@assets': '/assets',
 		'@stores': '/stores',
 	},
+  app: {
+    baseURL: '/board-game-helper/',
+  },
   css: ['@css/main.scss'],
   devtools: { enabled: true },
   devServer: {
@@ -21,4 +24,5 @@ export default defineNuxtConfig({
       }
     }]
   ],
+  ssr: false,
 })
