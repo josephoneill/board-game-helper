@@ -10,7 +10,7 @@ export default defineNuxtConfig({
 		'@stores': '/stores',
 	},
   app: {
-    baseURL: '.',
+    baseURL: '/board-game-helper/',
   },
   css: ['@css/main.scss'],
   devtools: { enabled: true },
