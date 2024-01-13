@@ -95,7 +95,7 @@ function getCardButtonStyle(cardNum: number, wager: boolean = false, wagerIndex:
   const cardSelected = !wager ? expeditionCards.value[cardKey] : expeditionCards.value.wager[wagerIndex];
 
   return {
-    '--card-background': `url(/img/${cardColor}_card.png) no-repeat`,
+    '--card-background': `url(/board-game-helper/img/${cardColor}_card.png) no-repeat`,
     '--card-text-color': props.textColor,
     '--card-hover-color': props.color,
   };
