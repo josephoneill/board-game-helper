@@ -60,7 +60,7 @@
   }
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .card-button:hover {
     outline: 2px solid white;
   }

@@ -7,3 +7,15 @@ html {
 body {
   margin: 0;
 }
+
+button {
+  box-shadow: none;
+  border: none;
+  background-color: #1B5E20;
+  color: white;
+  padding: 0.5rem;
+
+  &:disabled {
+    background-color: #485b49;
+  }
+}

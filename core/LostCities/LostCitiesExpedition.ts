@@ -97,11 +97,15 @@ class LostCitiesExpedition {
 
     return score;
   }
+
+  public getCardEntries(): ExpeditionCard[] {
+    return this.cardEntries;
+  }
 }
 
 export default LostCitiesExpedition;
 export { 
   LostCitiesExpedition,
   ExpeditionCard,
-  ExpeditionType
+  ExpeditionType,
 };

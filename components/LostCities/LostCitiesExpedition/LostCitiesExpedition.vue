@@ -31,14 +31,31 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { ExpeditionCard, ExpeditionType } from '~/core/LostCities/LostCitiesExpedition';
 import type { AddCardEvent, RemoveCardEvent } from '~/core/LostCities/LostCitiesEvents';
 
 const emit = defineEmits<{
   (e: 'add-card', value: AddCardEvent): void
   (e: 'remove-card', value: RemoveCardEvent): void
-}>()
+}>();
+
+class CardOptions {
+  one: boolean = false;
+  two: boolean = false;
+  three: boolean = false;
+  four: boolean = false;
+  five: boolean = false;
+  six: boolean = false;
+  seven: boolean = false;
+  eight: boolean = false;
+  nine: boolean = false;
+  ten: boolean = false;
+  wager: boolean[] = [false, false, false];
+  [key: string]: any;
+
+  constructor() {}
+};
 
 const props = defineProps({
   expeditionType: {
@@ -65,24 +82,21 @@ const props = defineProps({
 
 const numberToWords = [ 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten' ];
 
-class CardOptions {
-  one: boolean = false;
-  two: boolean = false;
-  three: boolean = false;
-  four: boolean = false;
-  five: boolean = false;
-  six: boolean = false;
-  seven: boolean = false;
-  eight: boolean = false;
-  nine: boolean = false;
-  ten: boolean = false;
-  wager: boolean[] = [false, false, false];
-  [key: string]: any;
-
-  constructor() {}
-}
-
 const expeditionCards = ref<CardOptions>(new CardOptions());
+
+function loadExpeditionCardData(cardEntries: ExpeditionCard[]) {
+  const cardOptions: CardOptions = new CardOptions();
+  cardEntries.forEach((cardEntry) => {
+    if (cardEntry === ExpeditionCard.WAGER) {
+      cardOptions.wager.unshift(true);
+      cardOptions.wager.pop();
+    } else {
+      cardOptions[ExpeditionCard[cardEntry].toLowerCase()] = true;
+    }
+  });
+
+  expeditionCards.value = cardOptions;
+}
 
 function numberToWord(num: number) {
   // -2, one for indexing starting a zero, one for cards starting at 2
@@ -165,6 +179,10 @@ function onCardButtonClicked(cardNum: number, wager = false) {
     });
   }
 }
+
+defineExpose({
+  loadExpeditionCardData
+});
 </script>
 
 <style src="./LostCitiesExpedition.scss" lang="scss" />
